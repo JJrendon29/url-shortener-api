@@ -55,7 +55,7 @@ def create_url(url_data: URLCreate, session: Session = Depends(get_session)):
 
     short_url = build_short_url(code)
     ttl_seconds = url_data.expires_in_hours * 3600
-    redis_client.setex(f"url:{code}", ttl_seconds, json.dumps(url_to_dict(url, short_url)))
+    redis_client.set(f"url:{code}", json.dumps(url_to_dict(url, short_url)), ex=ttl_seconds)
 
     return URLResponse(**url_to_dict(url, short_url))
 
@@ -77,7 +77,7 @@ def redirect_url(code: str, session: Session = Depends(get_session)):
         short_url = build_short_url(code)
         data = url_to_dict(url, short_url)
         ttl_remaining = int((url.expires_at - datetime.utcnow()).total_seconds())
-        redis_client.setex(f"url:{code}", ttl_remaining, json.dumps(data))
+        redis_client.set(f"url:{code}", json.dumps(data), ex=ttl_remaining)
 
     url = session.exec(select(URL).where(URL.code == code)).first()
     if url:
