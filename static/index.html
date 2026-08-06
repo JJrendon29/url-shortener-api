@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>URL Shortener</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="header">
+      <h1>url shortener</h1>
+      <p>Acortá cualquier URL con expiración automática</p>
+    </div>
+
+    <div class="card">
+      <label for="url-input">URL a acortar</label>
+      <input
+        type="url"
+        id="url-input"
+        placeholder="https://ejemplo.com/ruta/muy/larga"
+        autocomplete="off"
+      />
+
+      <div class="expiry-row">
+        <label for="expiry-slider">Expiración</label>
+        <input
+          type="range"
+          id="expiry-slider"
+          class="expiry-slider"
+          min="1"
+          max="168"
+          value="1"
+        />
+        <span class="expiry-value" id="expiry-display">1 hora</span>
+      </div>
+
+      <button class="btn" id="shorten-btn" onclick="shortenUrl()">Acortar URL</button>
+      <div class="error-msg" id="error-msg"></div>
+    </div>
+
+    <div class="result-card" id="result-card">
+      <div class="result-label">URL acortada</div>
+
+      <div class="short-url-row">
+        <span class="short-url-text" id="short-url-display"></span>
+        <button class="copy-btn" id="copy-btn" onclick="copyUrl()">Copiar</button>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-label">Clicks</div>
+          <div class="stat-value" id="stat-clicks">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Código</div>
+          <div class="stat-value" id="stat-code">—</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Expira en</div>
+          <div class="stat-value" id="stat-expiry">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="docs-link">
+      <a href="/docs" target="_blank">Ver documentación de la API →</a>
+    </div>
+
+  </div>
+
+  <script src="/static/js/app.js"></script>
+
+</body>
+</html>
